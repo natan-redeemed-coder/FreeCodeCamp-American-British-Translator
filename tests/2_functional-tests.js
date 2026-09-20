@@ -12,7 +12,7 @@ const translator = new Translator();
 
 
 suite("Functional Tests", () => {
-    test("Translation with text and locale fields: POST request to /api/translate", function() {
+    test("Translation with text and locale fields: POST request to /api/translate", function(done) {
         chai
             .request(server)
             .keepOpen()
@@ -40,10 +40,11 @@ suite("Functional Tests", () => {
                 assert.strictEqual(response.type, "application/json");
                 assert.strictEqual(response.body.text, "Mangoes are my favourite fruit.");
                 assert.strictEqual(response.body.translation, "Mangoes are my <span class=\"highlight\">favorite</span> fruit.");
+                done();
             });
     });
 
-    test("Translation with text and invalid locale field: POST request to /api/translate", function() {
+    test("Translation with text and invalid locale field: POST request to /api/translate", function(done) {
         chai
             .request(server)
             .keepOpen()
@@ -56,10 +57,11 @@ suite("Functional Tests", () => {
                 assert.strictEqual(response.status, 200);
                 assert.strictEqual(response.type, "application/json");
                 assert.strictEqual(response.body.error, "Invalid value for locale field");
+                done();
             });
     });
 
-    test("Translation with missing text field: POST request to /api/translate", function() {
+    test("Translation with missing text field: POST request to /api/translate", function(done) {
         chai
             .request(server)
             .keepOpen()
@@ -71,10 +73,11 @@ suite("Functional Tests", () => {
                 assert.strictEqual(response.status, 200);
                 assert.strictEqual(response.type, "application/json");
                 assert.strictEqual(response.body.error, "Required field(s) missing");
+                done();
             });
     });
 
-    test("Translation with missing locale field: POST request to /api/translate", function() {
+    test("Translation with missing locale field: POST request to /api/translate", function(done) {
         chai
             .request(server)
             .keepOpen()
@@ -86,10 +89,11 @@ suite("Functional Tests", () => {
                 assert.strictEqual(response.status, 200);
                 assert.strictEqual(response.type, "application/json");
                 assert.strictEqual(response.body.error, "Required field(s) missing");
+                done();
             });
     });
 
-    test("Translation with empty text: POST request to /api/translate", function() {
+    test("Translation with empty text: POST request to /api/translate", function(done) {
         chai
             .request(server)
             .keepOpen()
@@ -102,10 +106,11 @@ suite("Functional Tests", () => {
                 assert.strictEqual(response.status, 200);
                 assert.strictEqual(response.type, "application/json");
                 assert.strictEqual(response.body.error, "No text to translate");
+                done();
             });
     });
 
-    test("Translation with text that needs no translation: POST request to /api/translate", function() {
+    test("Translation with text that needs no translation: POST request to /api/translate", function(done) {
         chai
             .request(server)
             .keepOpen()
@@ -119,6 +124,7 @@ suite("Functional Tests", () => {
                 assert.strictEqual(response.type, "application/json");
                 assert.strictEqual(response.body.text, "Mangoes are my favourite fruit.");
                 assert.strictEqual(response.body.translation, "Everything looks good to me!");
+                done();
             });
     });
 });
